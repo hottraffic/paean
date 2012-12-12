@@ -1,33 +1,43 @@
-<!DOCTYPE html> 
-<html> 
-<head> 
-<title>Guess Who?</title> 
-<meta name="viewport" content="width=device-width, initial-scale=1"> 
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
-<link rel="stylesheet" href="custom.css" /> 
-<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
-</head> 
-<body> 
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Contact Example</title>
 
-<div data-role="page">
+    <script type="text/javascript" charset="utf-8" src="cordova-2.2.0.js"></script>
+    <script type="text/javascript" charset="utf-8">
 
-<div data-role="header">
-<h1>Guess Who?</h1>
-</div><!-- /header -->
+    // Wait for Cordova to load
+    //
+    document.addEventListener("deviceready", onDeviceReady, false);
 
-<div data-role="content">
+    // Cordova is ready
+    //
+    function onDeviceReady() {
+        // find all contacts with 'Bob' in any name field
+        var options = new ContactFindOptions();
+        options.filter="Bob"; 
+        var fields = ["displayName", "name"];
+        navigator.contacts.find(fields, onSuccess, onError, options);
+    }
 
-<ul data-role="listview" data-inset="true" data-filter="true">
-	<li><a href="#">Amanda Shelley</a></li>
-	<li><a href="#">Monet Grzecka</a></li>
-	<li><a href="#">Casey Grzecka</a></li>
-	<li><a href="#">Randall Shelley</a></li>
-	<li><a href="#">Kids</a></li>
-</ul>  
-</div><!-- /content -->
+    // onSuccess: Get a snapshot of the current contacts
+    //
+    function onSuccess(contacts) {
+        for (var i=0; i<contacts.length; i++) {
+            console.log("Display Name = " + contacts[i].displayName);
+        }
+    }
 
-</div><!-- /page -->
+    // onError: Failed to get the contacts
+    //
+    function onError(contactError) {
+        alert('onError!');
+    }
 
-</body>
+    </script>
+  </head>
+  <body>
+    <h1>Example</h1>
+    <p>Find Contacts</p>
+  </body>
 </html>
